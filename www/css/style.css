@@ -1,0 +1,178 @@
+/*鑷畾涔夊井璋�*/
+.addForm{
+    border:1px solid #ccc;
+    padding: 10px;
+    width:230px; 
+    float:left;
+    margin-right:30px;
+}
+.addForm legend{
+    width:auto;
+    border:0px;
+    color:#000;
+}
+div.cusTable {
+    float:left;
+    width:750px;
+}
+.header{
+    text-align:right;
+    margin-bottom: 8px;
+    display: inline-block;
+    min-height: 1%;
+    width: 100%;
+}
+.header:after{
+    clear:both;
+}
+.header form{
+    float: left;
+}
+
+/* styled checkboxes */
+.iPhoneCheckContainer {
+    position:relative;
+    height:27px;
+    cursor:pointer;
+    overflow:hidden;
+    border: 2px #f1f1f1 solid;
+}
+.iPhoneCheckContainer:hover {
+    border: 0px #ffffff solid;
+    margin:2px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 12px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 12px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 12px;
+}
+.iPhoneCheckContainer input {
+    position:absolute;
+    top:5px;
+    left:30px;
+    filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity:0
+}
+.iPhoneCheckContainer label {
+    white-space:nowrap;
+    font-size:10px;
+    font-weight: bold;
+    line-height:16px;
+    text-transform:uppercase;
+    cursor:pointer;
+    display:block;
+    height:22px;
+    position:absolute;
+    width:auto;
+    top:0;
+    padding-top:5px;
+    overflow:hidden
+}
+.iPhoneCheckContainer, .iPhoneCheckContainer label {
+    user-select:none;
+    -moz-user-select:none;
+    -khtml-user-select:none
+}
+.iPhoneCheckDisabled {
+    filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+    opacity:0.5
+}
+label.iPhoneCheckLabelOn {
+    color:#FFF;
+    background:url("../image/on.png") no-repeat left top;
+    text-shadow:0 1px 2px rgba(0, 0, 0, 0.6);
+    left:0;
+    padding-top:5px
+}
+label.iPhoneCheckLabelOn span {
+    padding-left:13px
+}
+label.iPhoneCheckLabelOff {
+    color:#FFF;
+    background:url("../image/off.png") no-repeat right 0;
+    text-shadow:0 1px 2px rgba(0, 0, 0, 0.6);
+    text-align:right;
+    right:0
+}
+label.iPhoneCheckLabelOff span {
+    padding-right:11px
+}
+.iPhoneCheckHandle {
+    display:block;
+    height:27px;
+    cursor:pointer;
+    position:absolute;
+    top:0;
+    left:0;
+    background:url("../image/slider_left.png") no-repeat;
+    padding-left:3px
+}
+.iPhoneCheckHandleRight {
+    height:100%;
+    width:100%;
+    padding-right:3px;
+    background:url("../image/slider_right.png") no-repeat right 0
+
+}
+.iPhoneCheckHandleCenter {
+    height:100%;
+    width:100%;
+    background:url("../image/slider_center.png")
+}
+
+/**鍒嗛〉**/
+ul.yiiPager{ font-size:12px; border:0; margin:0; padding:10px 0px; line-height:100%; min-height: 1%; display:inline-block; float:right; clear:both; right:10px; bottom: 10px;}
+ul.yiiPage:after{
+    clear:both;
+}
+ul.yiiPager li{ display:inline; width:26px; height: 26px; overflow: hidden; }
+ul.yiiPager a{ display: inline-block; width: 26px; height: 26px; text-align: center; line-height: 26px; color:#717171; text-decoration:none; background:url("../image/pages.png") no-repeat; }
+ul.yiiPager .page a{ background-position:0px 0px; }
+ul.yiiPager .selected a{ background-position:-26px 0px; color:#fff; }
+ul.yiiPager a:hover{ background-position:-26px 0px; color:#fff; }
+ul.yiiPager .first, ul.yiiPager .last{ display:none; }
+
+
+.ftext-1 { width: 85px; }
+.fwave { padding:10px; }
+
+.addForm label {
+    display: inline-block;
+}
+li.dropdown.open .bcaret, li.dropdown.open a:hover .bcaret, li.dropdown.open a:focus .bcaret {
+    margin-top: 8px;
+    display: inline-block;
+    float: right;
+    width: 0;
+    height: 0;
+    vertical-align: top;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 4px solid black;
+    content: "";
+}
+.nav li.dropdown.open a:hover .bcaret, .nav li.dropdown.open a:focus .bcaret{
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 4px solid white;
+}
+.subdrop{display: none; position: absolute;}
+.subdrop::before {
+    position: absolute;
+    top: 6px;
+    left: -7px;
+    display: inline-block;
+    border-top: 7px solid transparent;
+    border-right: 7px solid #999;
+    border-bottom: 7px solid transparent;
+    border-left-color: rgba(0, 0, 0, 0.2);
+    content: '';
+}
+.subdrop::after {
+    position: absolute;
+    top: 7px;
+    left: -6px;
+    display: inline-block;
+    border-top: 6px solid transparent;
+    border-right: 6px solid white;
+    border-bottom: 6px solid transparent;
+    content: '';
+}
