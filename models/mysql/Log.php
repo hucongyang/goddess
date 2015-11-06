@@ -107,6 +107,7 @@ class Log extends CActiveRecord
      * @param $user_id     // 用户ID
      * @param $log_type    // 用户操作类型
      * @param $time        // 用户操作时间
+     * @param $memo        // 备注
      *
      * 说明：用户操作对应的log记录
      *******************************************************/

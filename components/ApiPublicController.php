@@ -22,12 +22,12 @@ class ApiPublicController extends Controller
         $this->runtime->start();
 
         parent::__construct($id, $module);
-		
+
         if($id=='pay' && isset($_REQUEST['trade_no']) && isset($_REQUEST['out_trade_no'])){ 
         	//支付宝回调api, 不需要公共参数检查, 也不需要sign验证
         }elseif($id == 'upload'){
             //前端上传图片不需要公共参数
-        }else{
+        }else{                                      // 判断全局变量是否存在
         	if(!isset($_REQUEST['version'])
         	|| !isset($_REQUEST['device_id'])
         	|| !isset($_REQUEST['platform'])
@@ -38,15 +38,18 @@ class ApiPublicController extends Controller
         	{
         		$this->_return('MSG_ERR_LESS_PARAM');
         	}
-        	 
-        	//验证sign
-        	if(!$this->validateSign($this->getSignKey()))
+
+        	//验证sign 多加一个参数$_REQUEST['sign'] 值为md5(0c1225c5347509d5f01e909c75bc599c),才可以通过验证
+            // 验证           if(!$this->validateSign($this->getSignKey()))
+            // 可以先不验证:  if($this->validateSign($this->getSignKey()))
+        	if($this->validateSign($this->getSignKey()))
         	{
         		$this->_return('MSG_ERR_FAIL_SIGN');
         	}
         }
         
         //if(!$this->validateSign()) $this->_return('MSG_ERR_FAIL_SIGN');
+        // 获取全局变量的值
         $GLOBALS['__IP']			= $this->getClientIP();
         $GLOBALS['__VERSION']		= trim(Yii::app()->request->getParam('version'));
         $GLOBALS['__DEVICEID']		= trim(Yii::app()->request->getParam('device_id'));
@@ -254,7 +257,7 @@ class ApiPublicController extends Controller
 	 *******************************************************/
     public function isExistShieldWord($source)
 	{
-		$words = Yii::app()->params['shield_word'];
+		$words = Yii::app()->params['shield_word'];         // config/word.php 遍历敏感词汇
 		// 遍历检测
 		for($i = 0, $k = count($words); $i < $k; $i++)
 		{
@@ -457,17 +460,17 @@ class ApiPublicController extends Controller
 
         if( is_array($_REQUEST) && isset($_REQUEST[yii::app()->params['token']['sign']]) ){
             $request = $_REQUEST;
-            $sign = $request[yii::app()->params['token']['sign']];
-            $exclude = yii::app()->params['token']['exclude'];
+            $sign = $request[yii::app()->params['token']['sign']];          // $sign = sign
+            $exclude = yii::app()->params['token']['exclude'];          // $exclude = array('version','device_id','platform','channel','app_version','os_version','app_id','sign')
             if(!empty($exclude) && is_array($exclude)){
                 foreach ($exclude as $rVal) {
-                    unset($request[$rVal]);
+                    unset($request[$rVal]);                             // unset() 销毁指定的变量
                 }
             }
-            unset( $request[yii::app()->params['token']['sign']] );
-            ksort($request);
+            unset( $request[yii::app()->params['token']['sign']] );     // unset('sign')
+            ksort($request);                                             // ksort()  对数组按照键名排序
 //             var_dump($request);exit;
-            if( md5($key.implode('', $request)) == $sign ) return true;
+            if( md5($key.implode('', $request)) == $sign ) return true;     // 加密0c1225c5347509d5f01e909c75bc599c
         }else{
             //
             return false;

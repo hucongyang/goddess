@@ -31,47 +31,58 @@ class Characters extends CActiveRecord
 
     /**
      * 创建游戏角色
-     *
+     * @param $user_id
+     * @param $vit
+     * @param $extra_vit
+     * @param $point
+     * @param $exp
+     * @param $level
+     * @param $charge_vit_ts
+     * @param $follow_counts
+     * @param $now
+     * @param $gold
+     * @return bool
      */
     public function createGoddessCharacters($user_id, $vit, $extra_vit, $point, $exp, $level, $charge_vit_ts, $follow_counts, $now, $gold)
     {
         try{
-        $con_characters = Yii::app()->db_characters;
-        $table_name = sprintf('characters_%02s', dechex($user_id % 256));
-        $con_characters->createCommand()->insert('characters',
-                array('user_id'        => $user_id,
-                        'vit'            => $vit,
-                        'extra_vit'      => $extra_vit,
-                        'point'          => $point,
-                        'exp'            => $exp,
-                        'level'          => $level,
-                        'charge_vit_ts'  => $charge_vit_ts,
-                        'follow_counts'  => $follow_counts,
-                        'gold'           => $gold,
-                        'push_start'     => 9,
-                        'push_end'       => 23,
-                        'flowers'        => 10,
-                        'flowers_ts'     => $now,
-                        'create_ts'      => $now));
-        $con_characters->createCommand()->insert($table_name,
-                            array('user_id'        => $user_id,
-                                  'vit'            => $vit,
-                                  'extra_vit'      => $extra_vit,
-                                  'point'          => $point,
-                                  'exp'            => $exp,
-                                  'level'          => $level,
-                                  'charge_vit_ts'  => $charge_vit_ts,
-                                  'follow_counts'  => $follow_counts,
-                                  'gold'           => $gold,
-                                  'push_start'     => 9,
-                                  'push_end'       => 23,
-                                  'flowers'        => 10,
-                                  'flowers_ts'     => $now,
-                                  'create_ts'      => $now));
+            $con_characters = Yii::app()->db_characters;
+            $table_name = sprintf('characters_%02s', dechex($user_id % 256));
+            $con_characters->createCommand()->insert('characters',
+                    array('user_id'        => $user_id,
+                            'vit'            => $vit,
+                            'extra_vit'      => $extra_vit,
+                            'point'          => $point,
+                            'exp'            => $exp,
+                            'level'          => $level,
+                            'charge_vit_ts'  => $charge_vit_ts,
+                            'follow_counts'  => $follow_counts,
+                            'gold'           => $gold,
+                            'push_start'     => 9,
+                            'push_end'       => 23,
+                            'flowers'        => 10,
+                            'flowers_ts'     => $now,
+                            'create_ts'      => $now));
+            $con_characters->createCommand()->insert($table_name,
+                                array('user_id'        => $user_id,
+                                      'vit'            => $vit,
+                                      'extra_vit'      => $extra_vit,
+                                      'point'          => $point,
+                                      'exp'            => $exp,
+                                      'level'          => $level,
+                                      'charge_vit_ts'  => $charge_vit_ts,
+                                      'follow_counts'  => $follow_counts,
+                                      'gold'           => $gold,
+                                      'push_start'     => 9,
+                                      'push_end'       => 23,
+                                      'flowers'        => 10,
+                                      'flowers_ts'     => $now,
+                                      'create_ts'      => $now));
         }catch(Exception $e){
             error_log($e);
             return false;
         }
+        return true;
     }
 
     /**
@@ -182,7 +193,7 @@ class Characters extends CActiveRecord
      * 更新体力值
      *
      * @param int $user_id
-     * @param int $vit
+     * @param int $param
      */
     public function updatePlayerInfo($user_id, $param)
     {    	
@@ -197,7 +208,7 @@ class Characters extends CActiveRecord
      * @param int   $user_id
      * @param array $param
      *
-     * @return bollean
+     * @return boolean
      */
     public function updateCharacters($user_id, $param)
     {
@@ -266,10 +277,11 @@ class Characters extends CActiveRecord
         }
         return $data;
     }
-    
+
     /**
      * 每日玫瑰领取
-     * @param unknown $user_id
+     * @param $user_id
+     * @return bool
      */
     public function everyRose($user_id){    	
         $data= $this->getCharactersInfo($user_id);

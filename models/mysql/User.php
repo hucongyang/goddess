@@ -36,7 +36,7 @@ class User extends CActiveRecord
     	   $user_id = 0;
         try{
             $con_user = Yii::app()->db_user;
-            // 创建用户
+            // 创建用户 主表写入数据
             $con_user->createCommand()->insert('user',
             		array('user_name'       => $username,
             			  'password'        => $password,
@@ -47,8 +47,8 @@ class User extends CActiveRecord
             			  'regist_ts'		=> $time,
             			  'last_login_ts' 	=> $time));
             $user_id = Yii::app()->db_user->getLastInsertID();
-            // 创建分表用户
-            $table_name = sprintf('user_%02s', dechex($user_id % 256));
+            // 创建分表用户 分表写入数据方便后续查询
+            $table_name = sprintf('user_%02s', dechex($user_id % 256));     // dechex() 十进制转换为十六进制；sprintf()把格式化的字符串写入一个变量中
             $con_user->createCommand()->insert($table_name,
             		array('user_id'         => $user_id,
             			  'user_name'       => $username,
@@ -68,10 +68,11 @@ class User extends CActiveRecord
 	/*******************************************************
 	 * 获取用户UID     getUserId
 	 *
-	 * @param $username		// 用户名
-	 * @param $email		// 邮箱
-	 * @param $mobile		// 手机号码
+	 * @param string $username		// 用户名
+	 * @param string $email		// 邮箱
+	 * @param string $mobile		// 手机号码
 	 *
+     * @return int $uid
 	 * 说明：根据用户名/邮箱/手机号码，获取用户的userid
 	 *******************************************************/
 	public function getUserId($username, $email=null, $mobile=null)
@@ -97,9 +98,9 @@ class User extends CActiveRecord
 				$condition = 'mobile = :Mobile';
 				$param[':Mobile'] = $mobile;
 			}
-			
-			$condition = $condition.' AND app_id = :APP_ID';
-			$param[':APP_ID'] = $GLOBALS['__APPID'];
+			// goddess_user数据库里面user表没有app_id字段，所以先注释以下两行代码
+//			$condition = $condition.' AND app_id = :APP_ID';
+//			$param[':APP_ID'] = $GLOBALS['__APPID'];
 			$uid = 0;
 			try{
 				$uid = $con_user->createCommand()
@@ -142,9 +143,9 @@ class User extends CActiveRecord
 	/*******************************************************
 	 * 获取用户个人信息  getUserInfo
 	 *
-	 * @param $uid					// 用户ID
+	 * @param string $uid					// 用户ID
 	 *
-	 * @return $sex				// 性别
+	 * @return string $sex				// 性别
 	 * @return $age				// 年龄
 	 * @return $constellation		// 星座
 	 * @return $sign				// 签名

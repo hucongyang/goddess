@@ -56,7 +56,7 @@ class UserController extends ApiPublicController
             if(strlen($nickname) > 32 && strlen($nickname) < 6){
                 $this->_return('MSG_ERR_NIKENAME_LENGTH');
             }
-            $nickname   = mb_substr($nickname, 0, 32, 'utf-8');
+            $nickname   = mb_substr($nickname, 0, 32, 'utf-8');     // mb_substr($str, $start, $length);  根据start和length参数返回str中指定的部分
         }
         //密码格式不正确
         if(!$this->isPasswordValid($password))
@@ -84,7 +84,7 @@ class UserController extends ApiPublicController
         $user_id = User::model()->getUserId($username);
         if($user_id > 0) $this->_return('MSG_ERR_USERNAME_EXIST'); #20003
 
-        if(strcmp($username, $password) == 0)
+        if(strcmp($username, $password) == 0)               // strcmp() 二进制安全字符串比较 ：判断用户名与密码是否相同
         {
             $this->_return('MSG_ERR_SET_SAME_PASSWORD');
         }
@@ -92,7 +92,7 @@ class UserController extends ApiPublicController
         $user_id = User::model()->getUserId(false, $email);
         if($user_id > 0) $this->_return('MSG_ERR_EMAIL_EXIST');
 
-        // 创建用户并获取$user_id
+        // 创建用户并获取$user_id,多表操作需要开启事务
         $user_transaction  = Yii::app()->db_user->beginTransaction();
         $characters_transaction = Yii::app()->db_characters->beginTransaction();
         $token_transaction = Yii::app()->db_token->beginTransaction();
@@ -385,11 +385,13 @@ class UserController extends ApiPublicController
         if($user_id < 1) $this->_return('MSG_ERR_NO_USER');
 
         //验证token
-        if(Token::model()->verifyToken($user_id, $token, $GLOBALS['__APPID'])){
+        if(Token::model()->verifyToken($user_id, $token, $GLOBALS['__APPID']))
+        {
 
-        //获取用户信息
-	   $data = Consumer::model()->getUserInfo($user_id);
-        if($data){
+            //获取用户信息
+           $data = Consumer::model()->getUserInfo($user_id);
+            if($data)
+            {
                 $data['token'] = $token;
                 $this->_return('MSG_SUCCESS', $data);
             }else{

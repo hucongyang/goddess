@@ -9,8 +9,8 @@ class UserInfo extends CActiveRecord
     /**
      * 用户详情表新增一条用户信息
      *
-     * @param  string $username
-     * @param  string $sex
+     * @param  string $user_id
+     * @param  int $sex
      * @param  string $age
      * @param  string $avatar
      *

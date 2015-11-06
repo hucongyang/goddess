@@ -3,7 +3,10 @@ class runtime
 {
     var $StartTime = 0;
     var $StopTime = 0;
-     
+
+    /**
+     * @return 用microtime()对脚本的运行计时
+     */
     function get_microtime()
     {
         list($usec, $sec) = explode(' ', microtime());

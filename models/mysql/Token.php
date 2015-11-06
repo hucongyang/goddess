@@ -45,7 +45,7 @@ class Token extends CActiveRecord
      * 获取用户系统中的token值
      *
      * @param  int    $user_id
-     *
+     * @param  int    $app_id
      * @return string $token
      */
     public function getUserToken($user_id, $app_id)
@@ -93,8 +93,10 @@ class Token extends CActiveRecord
     }
 
     /**
-     * 指定token 过期
-     *
+     * 指定token过期
+     * @param $user_id
+     * @param $app_id
+     * @return bool
      */
     public function expireToken($user_id, $app_id)
     {
