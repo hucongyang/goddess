@@ -84,7 +84,8 @@ class Token extends CActiveRecord
             $table_name = sprintf('token_%02s', dechex($user_id % 256));
             $con_token->createCommand()->update($table_name,
                     array('last_login_ts' => $time, 'token' => $token, 'expire_ts' => $expire_ts),
-                    'user_id=:UserId AND app_id=:AppId', array(':UserId' => $user_id, ':AppId' => $app_id));
+                    'user_id=:UserId AND app_id=:AppId',
+                    array(':UserId' => $user_id, ':AppId' => $app_id));
         }catch(Exception $e){
             error_log($e);
             return false;

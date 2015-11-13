@@ -29,6 +29,7 @@ class User extends CActiveRecord
      * @param  string $password
      * @param  string $email
      * @param  string $mobile
+	 * @param	string $time
 	 *
 	 * @return int   $user_id
      */

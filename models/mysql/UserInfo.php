@@ -9,12 +9,15 @@ class UserInfo extends CActiveRecord
     /**
      * 用户详情表新增一条用户信息
      *
-     * @param  string $user_id
-     * @param  int $sex
-     * @param  string $age
-     * @param  string $avatar
-     *
-     * @return int   $uid
+     * @param $user_id
+     * @param int $sex
+     * @param null $age
+     * @param null $avatar
+     * @param int $constellation
+     * @param null $nickname
+     * @param null $signature
+     * @param null $birthday
+     * @return bool
      */
     public function insertUserInfo($user_id, $sex=0, $age=null, $avatar=null, $constellation=0, $nickname=null, $signature=null, $birthday=null)
     {
